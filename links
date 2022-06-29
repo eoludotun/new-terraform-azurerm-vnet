@@ -1,0 +1,26 @@
+https://docs.microsoft.com/en-us/azure/developer/terraform/create-linux-virtual-machine-with-infrastructure
+
+https://docs.microsoft.com/en-us/azure/developer/terraform/create-vm-cluster-with-infrastructure
+
+az vm list -g acctestrg --query "[].{\"VM Name\":name}" -o table
+
+https://stackoverflow.com/questions/66633650/terraform-enable-vm-insights
+
+https://github.com/terraform-azurerm-modules/terraform-azurerm-aad-windows-vm.git
+
+
+=====
+
+If you don’t have the az CLI on your machine, you can install it.
+
+Log into Azure:
+
+ az login
+Check how many subscriptions we have for this tenant:
+
+ az account list --output table
+Set the right subscription for our deployment:
+
+ az account set --subscription "XXXXXX-XXXXXXX-XXXX-XXX"
+
+======
