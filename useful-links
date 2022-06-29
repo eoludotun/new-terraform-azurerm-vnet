@@ -22,5 +22,7 @@ Check how many subscriptions we have for this tenant:
 Set the right subscription for our deployment:
 
  az account set --subscription "XXXXXX-XXXXXXX-XXXX-XXX"
+ az account set --subscription subscription-name
+
 
 ======
