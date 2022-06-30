@@ -1,4 +1,17 @@
+https://github.com/PVengalRaoP/LinuxPatch.git
+
+https://github.com/msgarbossa/auto_patch.git
+https://github.com/my0373/ansible_rhel_patch.git
+https://github.com/naveensangadala/ansible-linux-os-patching.git
+https://github.com/arikkert/ansible-role_centos8repo.git
+
+
 patch window= https://docs.ansible.com/ansible/latest/collections/ansible/windows/win_updates_module.html
+https://github.com/poojanagalikar/ansible-patch-1.git
+https://github.com/arpanrec/ansible-role-linux-patching.git
+https://github.com/KKarani1/Ansible.git
+
+ansible-playbook -i hosts main.yml --extra-vars @params.yml -vvvv
 
 
 
