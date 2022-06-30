@@ -1,4 +1,10 @@
+https://buildvirtual.net/how-to-deploy-wvd-session-hosts-using-terraform/
+
 https://docs.microsoft.com/en-us/azure/developer/terraform/create-linux-virtual-machine-with-infrastructure
+https://stackoverflow.com/questions/68389589/enable-azure-monitor-for-existing-virtual-machines-using-terraform
+
+ansible-patching= https://github.com/het-tanis/ansible_patching.git
+https://stackoverflow.com/questions/68389589/enable-azure-monitor-for-existing-virtual-machines-using-terraform
 
 https://docs.microsoft.com/en-us/azure/developer/terraform/create-vm-cluster-with-infrastructure
 
