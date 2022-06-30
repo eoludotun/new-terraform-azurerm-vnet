@@ -1,3 +1,9 @@
+patch window= https://docs.ansible.com/ansible/latest/collections/ansible/windows/win_updates_module.html
+
+
+
+
+
 https://buildvirtual.net/how-to-deploy-wvd-session-hosts-using-terraform/
 
 https://docs.microsoft.com/en-us/azure/developer/terraform/create-linux-virtual-machine-with-infrastructure
