@@ -1,4 +1,11 @@
 https://github.com/PVengalRaoP/LinuxPatch.git
+window = https://github.com/it-pappa/Ansible-Role_patch_windows.git
+repo = https://github.com/ranjithmani/ansible-flask-patcher.git
+https://github.com/Minions07/Ansible-Linux-Patching.git
+
+checking = https://github.com/Minions07/Ansible-Patch.git
+
+https://github.com/ttiinc/ansible-serverpatching-edc.git
 
 https://github.com/msgarbossa/auto_patch.git
 https://github.com/my0373/ansible_rhel_patch.git
