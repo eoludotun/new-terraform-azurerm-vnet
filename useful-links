@@ -1,3 +1,18 @@
+az login
+az account show | jq '.tenantID'
+az account list --query "[?tenantId=='<tenantId>'].{Name:name,ID:id}" --output Table
+az account set --subscription "<subscription_id_or_subscription_name>"
+az ad sp create-for-rbac --name "<service_principal_name>"
+
+https://boredconsultant.com/2022/03/02/Azure-VM-Deployment-With-Ansible/
+https://devopscube.com/packer-tutorial-for-beginners/
+https://faun.pub/building-vm-images-on-azure-using-packer-hcl-and-powershell-scripts-45abaaa87e1f
+packer =  https://docs.microsoft.com/en-us/azure/developer/terraform/create-vm-scaleset-network-disks-using-packer-hcl
+packer =  https://www.infralovers.com/en/articles/2021/11/15/automate-virtual-machine-templates-with-packer-for-azure/
+https://jmorano.moretrix.com/2022/04/using-ansible-to-finalize-hashicorp-packer-images/
+
+
+
 https://github.com/PVengalRaoP/LinuxPatch.git
 window = https://github.com/it-pappa/Ansible-Role_patch_windows.git
 repo = https://github.com/ranjithmani/ansible-flask-patcher.git
