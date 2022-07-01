@@ -4,7 +4,11 @@ az account list --query "[?tenantId=='<tenantId>'].{Name:name,ID:id}" --output T
 az account set --subscription "<subscription_id_or_subscription_name>"
 az ad sp create-for-rbac --name "<service_principal_name>"
 
+
+terraform-pre-commit = https://github.com/Mikroways/windows-packer-terraform-libvirt/blob/main/.github/workflows/lint.yml
+WINDOW = https://github.com/Mikroways/windows-packer-terraform-libvirt.git
 https://boredconsultant.com/2022/03/02/Azure-VM-Deployment-With-Ansible/
+https://github.com/Alex-developpeur/Ansible-Packer-Terraform.git
 https://devopscube.com/packer-tutorial-for-beginners/
 https://faun.pub/building-vm-images-on-azure-using-packer-hcl-and-powershell-scripts-45abaaa87e1f
 packer =  https://docs.microsoft.com/en-us/azure/developer/terraform/create-vm-scaleset-network-disks-using-packer-hcl
