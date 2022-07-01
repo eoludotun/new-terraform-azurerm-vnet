@@ -5,6 +5,7 @@ az account set --subscription "<subscription_id_or_subscription_name>"
 az ad sp create-for-rbac --name "<service_principal_name>"
 
 
+SUPER= https://github.com/svenikea/terraform-packer-ansible.git
 terraform-pre-commit = https://github.com/Mikroways/windows-packer-terraform-libvirt/blob/main/.github/workflows/lint.yml
 WINDOW = https://github.com/Mikroways/windows-packer-terraform-libvirt.git
 https://boredconsultant.com/2022/03/02/Azure-VM-Deployment-With-Ansible/
