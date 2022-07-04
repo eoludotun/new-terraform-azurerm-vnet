@@ -11,6 +11,114 @@ az account list --query "[?tenantId=='<tenantId>'].{Name:name,ID:id}" --output T
 az account set --subscription "<subscription_id_or_subscription_name>"
 az ad sp create-for-rbac --name "<service_principal_name>"
 
+az vm image list --location westus --publisher Canonical --offer UbuntuServer --sku 16.04.0-LTS --allA
+# Find all Gen2 SKUs published by Microsoft Windows Desktop
+az vm image list --publisher MicrosoftWindowsDesktop --sku g2 --output table --all
+
+# Find all Gen2 SKUs published by Canonical
+az vm image list --publisher Canonical --sku gen2 --output table --all
+
+=====
+az account list | tail -n15
+
+az group create --name packerdemo --location "West US 3"
+az storage account create -g packerdemo -n packerdemoStorageAccount  --location "West US 3"
+=======
+
+
+
+
+
+AZURE-DEVOPS=
+https://github.com/Ruthhl3ss/public/blob/main/Packer-Templates/Windows10AVDImage.pkr.hcl
+https://github.com/TheSmallHumanCloud/azure-pipeline-packer-templates.git
+https://github.com/schnerring/packer-windows-avd.git
+WITH-GITHUB-ACTION = https://github.com/schnerring/packer-windows-avd.git
+https://github.com/alexholliz/w2019-ue-agent.git
+https://azuredevopslabs.com/labs/vstsextend/ansible/
+ANSIBLE-PACKER= https://github.com/ssdowd/example-azure-pipeline-packer.git
+
+https://www.nielskok.tech/azure-virtual-desktop/packer-yaml-azure-devops-pipeline-pt-1/
+https://erwinstaal.nl/posts/automatically-renew-private-agent-images/
+https://alven.tech/upgrade-packer-json-template-to-hcl2-for-azure-virtual-desktop/?utm_source=rss&utm_medium=rss&utm_campaign=upgrade-packer-json-template-to-hcl2-for-azure-virtual-desktop
+https://faun.pub/building-vm-images-on-azure-using-packer-hcl-and-powershell-scripts-45abaaa87e1f
+
+
+https://schnerring.net/blog/automate-building-custom-windows-images-for-azure-virtual-desktop-with-packer-and-github-actions/#prepare-packer-resources-with-terraform
+
+https://yetiops.net/posts/packer-ansible-windows-aws/
+
+https://github.com/hashicorp/packer-plugin-azure/blob/main/example/rhel.json
+https://iluizsousa22.medium.com/descomplicando-o-hardening-de-imagens-ec2-6a99ad654e24
+
+https://github.com/andersulf/iac-packer-ansible-azure-VM.git
+
+https://www.infralovers.com/en/articles/2021/12/13/simplify-virtual-machine-templates-with-packer-for-any-cloud/
+
+https://github.com/chrisvugrinec/azure-packer-demo
+
+packer = https://installati.one/debian/9/packer/
+
+{
+  "builders": [{
+    "type": "azure-arm",
+
+    "client_id": "f5b6a5cf-fbdf-4a9f-b3b8-3c2cd00225a4",
+    "client_secret": "0e760437-bf34-4aad-9f8d-870be799c55d",
+    "tenant_id": "72f988bf-86f1-41af-91ab-2d7cd011db47",
+    "subscription_id": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxx",
+
+    "managed_image_resource_group_name": "myResourceGroup",
+    "managed_image_name": "myPackerImage",
+
+    "os_type": "Linux",
+    "image_publisher": "Canonical",
+    "image_offer": "UbuntuServer",
+    "image_sku": "16.04-LTS",
+
+    "azure_tags": {
+        "dept": "Engineering",
+        "task": "Image deployment"
+    },
+
+    "location": "East US",
+    "vm_size": "Standard_DS2_v2"
+  }],
+  "provisioners": [{
+    "execute_command": "chmod +x {{ .Path }}; {{ .Vars }} sudo -E sh '{{ .Path }}'",
+    "inline": [
+      "apt-get update",
+      "apt-get upgrade -y",
+      "apt-get -y install nginx",
+
+      "/usr/sbin/waagent -force -deprovision+user && export HISTSIZE=0 && sync"
+    ],
+    "inline_shebang": "/bin/sh -x",
+    "type": "shell"
+  }]
+}
+
+-------===================
+    "provisioners": [
+        {
+          "type": "powershell",
+          "script": "./scripts/ConfigureRemotingForAnsible.ps1"
+        }, 
+          {
+            "type": "ansible",
+            "playbook_file": "./playbooks/nginx.yaml",  
+            "user": "packer",
+            "use_proxy": false,
+            "extra_arguments": ["-e", "ansible_winrm_server_cert_validation=ignore"]
+        },
+        {
+          "type": "powershell",
+          "script" : "./scripts/sysprep.ps1"
+        }]
+  }
+==============================
+
+
 SUPER= https://github.com/svenikea/terraform-packer-ansible.git
 terraform-pre-commit = https://github.com/Mikroways/windows-packer-terraform-libvirt/blob/main/.github/workflows/lint.yml
 WINDOW = https://github.com/Mikroways/windows-packer-terraform-libvirt.git
