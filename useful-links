@@ -1,3 +1,5 @@
+TOP = https://devopsand.beer/2022/03/26/immutable-Infrastructure-with-ansible-packer-and-terraform-on-azure/
+
 az login
 az account show | jq '.tenantID'
 az account list --query "[?tenantId=='<tenantId>'].{Name:name,ID:id}" --output Table
