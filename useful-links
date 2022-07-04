@@ -1,5 +1,7 @@
 TOP = https://devopsand.beer/2022/03/26/immutable-Infrastructure-with-ansible-packer-and-terraform-on-azure/
 
+az sig image-definition create --resource-group <my-rg> --gallery-name <my_shared_image_gallery> --gallery-image-definition <my-ubuntu18> --publisher <company> --offer UbuntuServer --sku 18.04-LTS --os-type linux
+
 az login
 az account show | jq '.tenantID'
 az account list --query "[?tenantId=='<tenantId>'].{Name:name,ID:id}" --output Table
