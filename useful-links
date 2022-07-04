@@ -19,6 +19,8 @@ az vm image list --publisher MicrosoftWindowsDesktop --sku g2 --output table --a
 az vm image list --publisher Canonical --sku gen2 --output table --all
 
 =====
+accept aggreement on CIS URL = az vm image terms accept --urn center-for-internet-security-inc:cis-ubuntu-linux-2004-l1:cis-ubuntu2004-l1:1.0.3 --subscription {YOUR_SUB_ID}
+
 az account list | tail -n15
 
 az group create --name packerdemo --location "West US 3"
