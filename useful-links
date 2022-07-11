@@ -31,7 +31,32 @@ az group create --name packerdemo --location "West US 3"
 az storage account create -g packerdemo -n packerdemoStorageAccount  --location "West US 3"
 =======
 
+https://www.onuryasarlar.com/azure/azure-infrastructure-automation-with-gitlab-ci
 
+https://gitlab.com/yasarlaro/azure-arm-templates/-/tree/main/
+https://blog.danielkomaz.com/setup-an-iac-pipeline-to-azure-using-github-gitlab-part-2-write-terraform-code-and-prepare-azure/
+https://www.onuryasarlar.com/azure/azure-infrastructure-automation-with-gitlab-ci
+
+https://gist.githubusercontent.com/nicosingh/6b1b062020e583d1309b6bcd51745526/raw/d2413d120d1bec5e67b9d49f6f42f254bfb43c7a/config.azure.toml
+
+# . . . remaining part of /etc/gitlab-runner/config.toml
+
+[runners.machine]
+  MachineDriver = "azure"
+  MachineName = "gitlab-docker-machine-%s"
+  MachineOptions = [
+    "azure-subscription-id=xxx",
+    "azure-client-id=xxx",
+    "azure-client-secret=xxx",
+    "azure-resource-group=gitlab-ci",
+    "azure-location=eastus",
+    "azure-size=Standard_B2ms",
+    "azure-storage-type=Standard_LRS",
+  ]
+
+
+
+https://www.onuryasarlar.com/azure/azure-infrastructure-automation-with-gitlab-ci
 
 
 
