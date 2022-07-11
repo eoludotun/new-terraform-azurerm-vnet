@@ -30,6 +30,7 @@ az account list | tail -n15
 az group create --name packerdemo --location "West US 3"
 az storage account create -g packerdemo -n packerdemoStorageAccount  --location "West US 3"
 =======
+https://www.onuryasarlar.com/azure/azure-infrastructure-automation-with-gitlab-ci
 
 https://www.onuryasarlar.com/azure/azure-infrastructure-automation-with-gitlab-ci
 
