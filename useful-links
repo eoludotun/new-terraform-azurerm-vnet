@@ -30,6 +30,244 @@ az account list | tail -n15
 az group create --name packerdemo --location "West US 3"
 az storage account create -g packerdemo -n packerdemoStorageAccount  --location "West US 3"
 =======
+
+
+
+
+------
+https://gitlab.com/gitlab-org/gitlab-runner/-/issues/27010
+https://stackoverflow.com/questions/63371596/gitlab-runner-docker-image
+
+dockerfile = https://github.com/ericmaino/azure-gitlab-runner.git
+How to install configure and register GitLab runne = https://cloudaffaire.com/how-to-install-configure-and-register-gitlab-runner/
+https://www.fosstechnix.com/how-to-install-gitlab-runner-on-ubuntu/
+https://testdriven.io/blog/gitlab-ci-docker/
+https://repository.unesco.org/gitlab/help/ci/runners/configure_runners.md
+
+windowr-runner = https://holdmybeersecurity.com/2021/02/19/devops-tales-install-setup-gitlab-gitlab-runners-on-docker-windows-linux-and-macos/
+https://www.insight-tec.com/tech-blog/ci-cd/20201222_gitlab_runner/
+https://docs.gitlab.com/runner/examples/gitlab.html
+https://gitlab.com/gitlab-org/gitlab-runner/-/issues/4738
+https://docs.gitlab.com/runner/configuration/autoscale.html
+https://www.digitalocean.com/community/tutorials/how-to-autoscale-gitlab-continuous-deployment-with-gitlab-runner-on-digitalocean
+https://docs.fuga.cloud/how-to-autoscale-your-gitlab-runners-on-openstack
+
+======
+Create a user for GitLab Runner.
+
+sudo useradd --comment 'GitLab Runner' --create-home gitlab-runner --shell /bin/bash
+
+https://blog.opstree.com/2018/12/03/gitlab-ci-with-nexus/
+
+=====
+
+## --------
+## Linux OS
+## --------
+ 
+## Download the binary for your system
+sudo curl -L --output /usr/local/bin/gitlab-runner \
+https://gitlab-runner-downloads.s3.amazonaws.com/latest/binaries/gitlab-runner-linux-amd64
+ 
+## Give it permissions to execute
+sudo chmod +x /usr/local/bin/gitlab-runner
+ 
+## Create a GitLab CI user
+sudo useradd --comment 'GitLab Runner' --create-home gitlab-runner --shell /bin/bash
+ 
+## Install and run as service
+sudo gitlab-runner install --user=gitlab-runner --working-directory=/home/gitlab-runner
+sudo gitlab-runner start
+ 
+## Check if the installation was successful
+gitlab-runner --version
+ 
+## ------
+## MAC OS
+## ------
+ 
+## Download the binary for your system
+sudo curl --output /usr/local/bin/gitlab-runner \
+https://gitlab-runner-downloads.s3.amazonaws.com/latest/binaries/gitlab-runner-darwin-amd64
+ 
+## Give it permissions to execute
+sudo chmod +x /usr/local/bin/gitlab-runner
+ 
+## Install and run as service
+cd ~
+gitlab-runner install
+gitlab-runner start
+ 
+## Check if the installation was successful
+gitlab-runner --version
+ 
+## ----------
+## Windows OS
+## ----------
+ 
+## Open a PowerShell session as admin
+## Create a folder somewhere in your system ex.: C:\GitLab-Runner
+New-Item -Path 'C:\GitLab-Runner' -ItemType Directory
+ 
+## Enter the folder
+cd 'C:\GitLab-Runner'
+ 
+## Dowload binary
+Invoke-WebRequest -Uri "https://gitlab-runner-downloads.s3.amazonaws.com/latest/binaries/gitlab-runner-windows-amd64.exe" `
+-OutFile "gitlab-runner.exe"
+ 
+## Install and run as service
+.\gitlab-runner.exe install
+.\gitlab-runner.exe start
+ 
+## Check if the installation was successful
+gitlab-runner --version
+=====
+
+
+
+
+/etc/gitlab-runner/config.toml exists already on ubuntu but not alpine
+$ docker run --rm -it   --entrypoint /bin/bash   gitlab/gitlab-runner:alpine-v12.9 -c 'cat /etc/gitlab-runner/config.toml'
+cat: can't open '/etc/gitlab-runner/config.toml': No such file or directory
+versus
+
+$ docker run --rm -it   --entrypoint /bin/bash   gitlab/gitlab-runner:ubuntu-v12.9.0 -c 'cat /etc/gitlab-runner/config.toml'
+concurrent = 1
+check_interval = 0
+
+[session_server]
+  session_timeout = 1800
+
+  -----
+  ----
+# /etc/gitlab-runner/config.toml
+
+[[runners]]
+ ...
+ [runers.docker]
+ image = "docker:stable"
+ volumes = ["/var/run/docker.sock:/var/run/docker.sock"]
+
+
+  ----
+
+------
+[[runners]]
+  name = "ruby-2.1-docker"
+  url = "https://CI/"
+  token = "TOKEN"
+  limit = 0
+  executor = "docker"
+  builds_dir = ""
+  shell = ""
+  environment = ["ENV=value", "LC_ALL=en_US.UTF-8"]
+  disable_verbose = false
+-----
+
+
+
+  ====
+
+# /etc/gitlab-runner/config.toml
+
+concurrent = 10
+
+[[runners]]
+  name = "gitlab-ci-runner-bastion"
+  url = "https://gitlab.com/"
+  token = "our-own-gitlab-token-goes-here"
+  executor = "docker+machine"
+  [runners.docker]
+    tls_verify = false
+    image = "docker:19.03.12"
+    privileged = true
+    disable_entrypoint_overwrite = false
+    oom_kill_disable = false
+    disable_cache = false
+    volumes = ["/certs/client", "/cache"]
+    shm_size = 0
+  [runners.machine]
+    # . . . to be completed below
+
+
+
+This configuration will make Gitlab able to run up to 10 jobs at the same time, using docker containers supporting docker-in-docker features.
+
+Now, let’s go to the runners.machine option. Given the AWS example documented in the official page:
+    -----
+
+# . . . remaining part of /etc/gitlab-runner/config.toml
+
+[runners.machine]
+  MachineDriver = "amazonec2"
+  MachineName = "gitlab-docker-machine-%s"
+  MachineOptions = [
+    "amazonec2-access-key=XXXX",
+    "amazonec2-secret-key=XXXX",
+    "amazonec2-region=us-central-1",
+    "amazonec2-vpc-id=vpc-xxxxx",
+    "amazonec2-subnet-id=subnet-xxxxx",
+    "amazonec2-use-private-address=true",
+    "amazonec2-tags=runner-manager-name,gitlab-aws-autoscaler,gitlab,true,gitlab-runner-autoscale,true",
+    "amazonec2-security-group=docker-machine-scaler",
+    "amazonec2-instance-type=m4.2xlarge",
+  ]
+
+
+
+  ------
+
+
+# . . . remaining part of /etc/gitlab-runner/config.toml
+
+[runners.machine]
+  MachineDriver = "google"
+  MachineName = "gitlab-docker-machine-%s"
+  MachineOptions = [
+    "google-project=xxxxx",
+    "google-network=xxxxx",
+    "google-subnetwork=xxxxx",
+    "google-use-internal-ip=true",
+    "google-machine-type=e2-standard-4",
+    "google-disk-size=10",
+    "google-disk-type=pd-standard",
+    "google-machine-image=https://www.googleapis.com/compute/v1/projects/ubuntu-os-cloud/global/images/family/ubuntu-1604-lts",
+    "google-username=root",
+  ]
+
+
+  -----
+
+
+# . . . remaining part of /etc/gitlab-runner/config.toml
+
+[runners.machine]
+  MachineDriver = "azure"
+  MachineName = "gitlab-docker-machine-%s"
+  MachineOptions = [
+    "azure-subscription-id=xxx",
+    "azure-client-id=xxx",
+    "azure-client-secret=xxx",
+    "azure-resource-group=gitlab-ci",
+    "azure-location=eastus",
+    "azure-size=Standard_B2ms",
+    "azure-storage-type=Standard_LRS",
+  ]
+
+  =-----
+    # Add docker volume
+    cat >> /etc/gitlab-runner/config.toml << EOF
+
+          [[runners.kubernetes.volumes.host_path]]
+            name = "var-run-docker-sock"
+            mount_path = "/var/run/docker.sock"
+    EOF
+
+  =====
+----
+
+
 https://www.onuryasarlar.com/azure/azure-infrastructure-automation-with-gitlab-ci
 
 https://www.onuryasarlar.com/azure/azure-infrastructure-automation-with-gitlab-ci
